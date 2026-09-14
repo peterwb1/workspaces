@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using ExerciseApp.Service;
 using Xunit;
@@ -9,7 +10,7 @@ namespace ExerciseApp.Tests
         [Fact]
         public void EveryAdvertisedMake_HasModelsAvailable()
         {
-            var detail = new QuoteService().GetQuoteDetail();
+            var detail = new QuoteService(TimeProvider.System).GetQuoteDetail();
 
             var makesWithoutModels = detail.Makes
                 .Where(make => !detail.Models.Any(spec => spec.Make == make))
@@ -21,7 +22,7 @@ namespace ExerciseApp.Tests
         [Fact]
         public void EveryModelSpec_BelongsToAnAdvertisedMake()
         {
-            var detail = new QuoteService().GetQuoteDetail();
+            var detail = new QuoteService(TimeProvider.System).GetQuoteDetail();
 
             var orphanedSpecs = detail.Models
                 .Where(spec => !detail.Makes.Contains(spec.Make))
@@ -37,7 +38,7 @@ namespace ExerciseApp.Tests
         [InlineData("BMW", "5 Series")]
         public void BmwModels_AreAvailable(string make, string model)
         {
-            var detail = new QuoteService().GetQuoteDetail();
+            var detail = new QuoteService(TimeProvider.System).GetQuoteDetail();
 
             var spec = detail.Models.SingleOrDefault(s => s.Make == make);
 

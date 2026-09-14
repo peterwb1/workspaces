@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Text.Json.Serialization;
+using ExerciseApp.Service;
 
 namespace ExerciseApp
 {
@@ -19,6 +21,9 @@ namespace ExerciseApp
                     option.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 });
             services.AddCors();
+
+            services.AddSingleton(TimeProvider.System);
+            services.AddScoped<IQuoteService, QuoteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
