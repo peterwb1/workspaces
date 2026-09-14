@@ -39,25 +39,27 @@ namespace ExerciseApp.Service
         public QuoteService(TimeProvider timeProvider) =>
             _timeProvider = timeProvider ?? throw new ArgumentNullException(nameof(timeProvider));
 
+        /// <summary>
+        /// The vehicles we insure, as one list. Makes are derived from this, so adding
+        /// a car is a single edit here rather than two that have to agree.
+        /// </summary>
+        private static readonly (string Make, string[] Models)[] Catalogue =
+        {
+            ("Ford", new[] { "Fiesta", "Focus", "Puma", "S Max" }),
+            ("Audi", new[] { "A3", "A4", "A5" }),
+            ("BMW",  new[] { "X5", "3 Series", "5 Series" })
+        };
+
         public QuoteDetail GetQuoteDetail()
         {
             var quoteDetail = new QuoteDetail();
 
-            quoteDetail.Makes.Add("Ford");
-            quoteDetail.Makes.Add("Audi");
-            quoteDetail.Makes.Add("BMW");
-
-            var modelSpec = new ModelSpec { Make = "Ford" };
-            modelSpec.Models.AddRange(new[] { "Fiesta", "Focus", "Puma", "S Max" });
-            quoteDetail.Models.Add(modelSpec);
-
-            modelSpec = new ModelSpec { Make = "Audi" };
-            modelSpec.Models.AddRange(new[] { "A3", "A4", "A5" });
-            quoteDetail.Models.Add(modelSpec);
-
-            modelSpec = new ModelSpec { Make = "BMW" };
-            modelSpec.Models.AddRange(new[] { "X5", "3 Series", "5 Series" });
-            quoteDetail.Models.Add(modelSpec);
+            foreach (var (make, models) in Catalogue)
+            {
+                var modelSpec = new ModelSpec { Make = make };
+                modelSpec.Models.AddRange(models);
+                quoteDetail.Models.Add(modelSpec);
+            }
 
             return quoteDetail;
         }
