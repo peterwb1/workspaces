@@ -1,3 +1,5 @@
+using System;
+
 namespace ExerciseApp.Model
 {
     public class QuoteResponse
@@ -13,6 +15,12 @@ namespace ExerciseApp.Model
 
         /// <summary>A description of why no quote was offered. Null when one was.</summary>
         public string Message { get; set; }
+
+        /// <summary>
+        /// Identifies the stored copy of this quote, so it can be retrieved later
+        /// from /Quote/{reference}. Set by the controller once the quote is saved.
+        /// </summary>
+        public Guid? QuoteReference { get; set; }
 
         public static QuoteResponse Offered(decimal premium) =>
             new QuoteResponse { Outcome = QuoteOutcome.Offered, Premium = premium };

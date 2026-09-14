@@ -24,6 +24,9 @@ namespace ExerciseApp
 
             services.AddSingleton(TimeProvider.System);
             services.AddScoped<IQuoteService, QuoteService>();
+
+            // Singleton so stored quotes outlive the request that created them.
+            services.AddSingleton<IQuoteStore, InMemoryQuoteStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
