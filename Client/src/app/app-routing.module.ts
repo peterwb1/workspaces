@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UnsureComponent } from './components/unsure/unsure.component';
+import { QuoteComponent } from './components/quote/quote.component';
 
 const routes: Routes = [
-  { path: '', component: UnsureComponent }
+  { path: '', component: QuoteComponent }
 ];
 
 @NgModule({

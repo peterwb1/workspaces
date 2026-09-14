@@ -5,12 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { UnsureComponent } from './components/unsure/unsure.component';
-import { UnsureService } from './service/unsure.service';
+import { QuoteComponent } from './components/quote/quote.component';
+import { QuoteService } from './service/quote.service';
 
 @NgModule({
   declarations: [
-    UnsureComponent
+    QuoteComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +21,7 @@ import { UnsureService } from './service/unsure.service';
      ReactiveFormsModule
 
   ],
-  providers: [UnsureService],
-  bootstrap:[UnsureComponent]
+  providers: [QuoteService],
+  bootstrap:[QuoteComponent]
 })
 export class AppModule { }

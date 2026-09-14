@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
   })
   
-export class UnsureService {
+export class QuoteService {
   
     constructor( private httpClient: HttpClient ) 
     { }

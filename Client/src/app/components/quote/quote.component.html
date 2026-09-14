@@ -1,0 +1,107 @@
+<div class="quote-page">
+  <div class="quote-card">
+    <header class="quote-card__header">
+      <h1>Car insurance quote</h1>
+      <p>Tell us about you and your car and we will price it straight away.</p>
+    </header>
+
+    <div class="alert alert-danger" role="alert" *ngIf="detailsFailed">
+      We could not load the list of cars. Please refresh the page to try again.
+    </div>
+
+    <form [formGroup]="quoteForm" (ngSubmit)="getQuote()" novalidate>
+
+      <div class="mb-3">
+        <label class="form-label" for="insuranceType">Insurance type</label>
+        <select id="insuranceType" class="form-select" formControlName="insuranceType"
+                [class.is-invalid]="showError(insuranceTypeCtrl)">
+          <option value="">Choose your type of insurance</option>
+          <option *ngFor="let type of details.insuranceTypes" [value]="type.type">{{type.description}}</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="showError(insuranceTypeCtrl)">
+          Please choose a type of insurance.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="dateOfBirth">Date of birth</label>
+        <input id="dateOfBirth" type="date" class="form-control" formControlName="dateOfBirth"
+               [max]="latestDateOfBirth" [class.is-invalid]="showError(dateOfBirthCtrl)">
+        <div class="invalid-feedback" *ngIf="showError(dateOfBirthCtrl)">
+          <span *ngIf="dateOfBirthCtrl.errors?.['required']">
+            Please enter your date of birth.
+          </span>
+          <span *ngIf="dateOfBirthCtrl.errors?.['invalidDate']">
+            Please enter a real date.
+          </span>
+          <span *ngIf="dateOfBirthCtrl.errors?.['futureDate']">
+            Your date of birth cannot be in the future.
+          </span>
+          <span *ngIf="dateOfBirthCtrl.errors?.['tooYoung']">
+            We can only insure drivers aged {{minimumAge}} or over.
+          </span>
+          <span *ngIf="dateOfBirthCtrl.errors?.['tooOld']">
+            We can only insure drivers aged {{maximumAge}} or under.
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-lg-6 mb-3">
+          <label class="form-label" for="make">Make</label>
+          <select id="make" class="form-select" formControlName="make"
+                  [class.is-invalid]="showError(makeCtrl)">
+            <option value="">Choose your make</option>
+            <option *ngFor="let make of details.makes" [value]="make">{{make}}</option>
+          </select>
+          <div class="invalid-feedback" *ngIf="showError(makeCtrl)">
+            Please choose a make.
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6 mb-3">
+          <label class="form-label" for="model">Model</label>
+          <select id="model" class="form-select" formControlName="model"
+                  [class.is-invalid]="showError(modelCtrl)" [attr.disabled]="models.length ? null : ''">
+            <option value="">{{ models.length ? 'Choose your model' : 'Choose a make first' }}</option>
+            <option *ngFor="let model of models" [value]="model">{{model}}</option>
+          </select>
+          <div class="invalid-feedback" *ngIf="showError(modelCtrl)">
+            Please choose a model.
+          </div>
+        </div>
+      </div>
+
+      <div class="quote-card__actions">
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          {{ loading ? 'Getting your quote...' : 'Get quote' }}
+        </button>
+        <button type="button" class="btn btn-outline-secondary" (click)="reset()" [disabled]="loading">
+          Start again
+        </button>
+      </div>
+
+      <div class="alert alert-warning mt-3" role="alert"
+           *ngIf="submitted && quoteForm.invalid && !loading">
+        Please correct the highlighted fields and try again.
+      </div>
+
+      <div class="alert alert-danger mt-3" role="alert" *ngIf="requestFailed">
+        Something went wrong getting your quote. Please try again.
+      </div>
+    </form>
+
+    <div class="quote-result" *ngIf="result" [attr.aria-live]="'polite'">
+      <div class="quote-result__offered" *ngIf="result.outcome === 'Offered'">
+        <p class="quote-result__label">Your quote</p>
+        <p class="quote-result__premium">{{ result.premium | currency:'GBP':'symbol':'1.2-2' }}</p>
+        <p class="quote-result__note">per year, based on the details above.</p>
+      </div>
+
+      <div class="alert alert-secondary mb-0" role="alert" *ngIf="result.outcome !== 'Offered'">
+        <strong>We are sorry, we cannot quote for this.</strong>
+        <div>{{ result.message }}</div>
+      </div>
+    </div>
+  </div>
+</div>
