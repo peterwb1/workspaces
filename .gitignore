@@ -1,0 +1,7 @@
+.vs/
+*.user
+ExerciseApp.Tests/bin/
+ExerciseApp.Tests/obj/
+ExerciseApp/bin/
+ExerciseApp/obj/
+.idea

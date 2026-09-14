@@ -1,0 +1,63 @@
+<div>
+  <form [formGroup]="quoteForm" (ngSubmit)="GetQuote()" >
+
+    <div class="mb-3">
+    <label>
+      Insurance Type:
+      <select  (change)="changeInsuranceType($event)" formControlName="insuranceType">
+        <option value="" disabled>Choose your type of insurance</option>
+        <option *ngFor="let type of details.insuranceTypes" [value]="type.type">{{type.description}}</option>
+     </select>
+    </label>
+    <div  class="error"  *ngIf="insuranceTypeCtrl.invalid && (insuranceTypeCtrl.dirty || insuranceTypeCtrl.touched)">
+      <div *ngIf="insuranceTypeCtrl.errors?.required">
+        Insurance type is required.
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label>
+      Date of Birth:
+      <input type="date" formControlName="dateOfBirth">
+    </label>
+    <div  class="error"  *ngIf="dateOfBirthCtrl.invalid && (dateOfBirthCtrl.dirty || dateOfBirthCtrl.touched)">
+      <div *ngIf="dateOfBirthCtrl.errors?.required">
+        Date of Birth is required.
+      </div>
+    </div>
+  </div>  
+    <div class="mb-3">
+      <label>
+      Make:
+      <select  (change)="changeMake($event)" formControlName="make">
+        <option value="" disabled>Choose your make</option>
+        <option *ngFor="let make of details.makes" [value]="make">{{make}}</option>
+     </select>
+    </label>
+    <div  class="error"  *ngIf="makeCtrl.invalid && (makeCtrl.dirty || makeCtrl.touched)">
+      <div *ngIf="makeCtrl.errors?.required">
+        Make is required.
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label>
+      Model:
+      <select  (change)="changeModel($event)" formControlName="model">
+        <option value="" disabled>Choose your model</option>
+        <option *ngFor="let model of Models" [value]="model">{{model}}</option>
+     </select>
+    </label>
+    <div class="error" *ngIf="modelCtrl.invalid && (modelCtrl.dirty || modelCtrl.touched)">
+      <div *ngIf="modelCtrl.errors?.required">
+        Model is required.
+      </div>
+    </div>
+  </div>
+    <button type="submit"> Get Quote</button>
+    <!--decide when should be visible.  If GetQuote is no disabled, could do wait until clicked and on change of form data-->
+    <div class="error" [style.visibility]="quoteForm.valid || !touched ? 'hidden' : 'visible'">The form is not valid</div>
+    <div [style.visibility]="QuoteReceived ? 'visible' : 'hidden'">{{Quote}}</div>
+  </form>
+</div>

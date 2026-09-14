@@ -1,0 +1,15 @@
+@use "../../../../node_modules/bootstrap/scss/bootstrap" with (
+  $grid-breakpoints: (
+    xs: 0,
+    sm: 200px,
+    md: 300px,
+    lg: 600px,
+    xl: 1200px
+  ),
+  $container-max-widths: (
+    sm: 200px,
+    md: 300px,
+    lg: 600px,
+    xl: 1140px
+  )
+);

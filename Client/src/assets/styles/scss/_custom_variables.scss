@@ -1,0 +1,21 @@
+// Variables
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 200px,
+  md: 300px,
+  lg: 600px,
+  xl: 1200px
+);
+
+$container-max-widths: (
+  sm: 200px,
+  md: 300px,
+  lg: 600px,
+  xl: 1140px
+);
