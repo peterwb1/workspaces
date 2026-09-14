@@ -20,7 +20,7 @@ namespace ExerciseApp.Service
             modelSpec.Models.AddRange(new[] { "A3", "A4", "A5" });
             quoteDetail.Models.Add(modelSpec);
 
-            modelSpec = new ModelSpec { Make = "BMS" };
+            modelSpec = new ModelSpec { Make = "BMW" };
             modelSpec.Models.AddRange(new[] { "X5", "3 Series", "5 Series" });
             quoteDetail.Models.Add(modelSpec);
 
